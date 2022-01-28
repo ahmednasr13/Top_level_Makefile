@@ -1,0 +1,17 @@
+$(LIB).so: $(LIB).cpp
+	@$(GCC) $(LIB_FLAGS) $(C_FLAGS) -o $(BUILD_DIR)/$@ $<
+
+$(EXECUTABLE): $(EXECUTABLE).cpp
+	@$(GCC) $(C_FLAGS) -o $(BUILD_DIR)/$@ $< $(LD_FLAGS)
+
+.PHONY: $(PACKAGES)
+$(PACKAGES):
+	@$(MAKE) -s -C $@/impl
+
+.PHONY: create_build_directory
+create_build_directory:
+	@mkdir -p build
+
+.PHONY: print-%
+print-%:
+	@echo $*=$($*)
